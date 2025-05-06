@@ -1,0 +1,21 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "MSVC",
+	"compiler-id" : "MSVC",
+	"compiler-simulate-id" : "",
+	"config" : "Debug",
+	"cxx-modules" : {},
+	"dir-cur-bld" : "C:/Others/An_III/piTest/project2.0/cmake-build-debug",
+	"dir-cur-src" : "C:/Others/An_III/piTest/project2.0",
+	"dir-top-bld" : "C:/Others/An_III/piTest/project2.0/cmake-build-debug",
+	"dir-top-src" : "C:/Others/An_III/piTest/project2.0",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"C:\\Users\\stefa\\Downloads\\opencv\\build\\include"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "C:/Others/An_III/piTest/project2.0/cmake-build-debug/CMakeFiles/project2.0.dir"
+}

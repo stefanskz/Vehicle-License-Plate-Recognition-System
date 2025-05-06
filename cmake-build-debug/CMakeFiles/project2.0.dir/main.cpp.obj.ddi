@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "CMakeFiles\\project2.0.dir\\main.cpp.obj",
+            "outputs": [
+                "C:\\Others\\An_III\\piTest\\project2.0\\cmake-build-debug\\vc140.pdb",
+                "CMakeFiles\\project2.0.dir\\main.cpp.obj.ddi"
+            ],
+            "requires": []
+        }
+    ]
+}

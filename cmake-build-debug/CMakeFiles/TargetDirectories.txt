@@ -1,0 +1,3 @@
+C:/Others/An_III/piTest/project2.0/cmake-build-debug/CMakeFiles/project2.0.dir
+C:/Others/An_III/piTest/project2.0/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Others/An_III/piTest/project2.0/cmake-build-debug/CMakeFiles/rebuild_cache.dir
