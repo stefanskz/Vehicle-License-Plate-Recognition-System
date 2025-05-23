@@ -25,6 +25,19 @@ Mat bgr_2_grayscale(Mat source) {
     return grayscale_image;
 }
 
+Mat to_grayscale(Mat img) {
+    int rows = img.rows;
+    int cols = img.cols;
+    Mat gray(rows, cols, CV_8UC1);
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            Vec3b color = img.at<Vec3b>(i, j);
+            gray.at<uchar>(i, j) = (uchar) (0.299 * color[2] + 0.587 * color[1] + 0.114 * color[0]);
+        }
+    }
+    return gray;
+}
+
 Mat box_blur(Mat img, int size) {
     int rows = img.rows, cols = img.cols;
     Mat blurred(rows, cols, CV_8UC1);
@@ -151,10 +164,28 @@ BoundingBox detect_plate(Mat img) {
     return bestBox;
 }
 
-int main() {
-    Mat img = imread("C:/Others/An_III/piTest/project1.0/images/nrR.jpg", IMREAD_COLOR);
+float computeIoU(BoundingBox a, BoundingBox b) {
+    int xA = max(a.xMin, b.xMin);
+    int yA = max(a.yMin, b.yMin);
+    int xB = min(a.xMax, b.xMax);
+    int yB = min(a.yMax, b.yMax);
 
-    Mat gray = bgr_2_grayscale(img);
+    int interWidth = max(0, xB - xA + 1);
+    int interHeight = max(0, yB - yA + 1);
+    int interArea = interWidth * interHeight;
+
+    int boxAArea = area(a.xMin, a.xMax, a.yMin, a.yMax);
+    int boxBArea = area(b.xMin, b.xMax, b.yMin, b.yMax);
+
+    int unionArea = boxAArea + boxBArea - interArea;
+
+    return (float) interArea / (float) unionArea;
+}
+
+int main() {
+    Mat img = imread("C:/Others/An_III/piTest/project2.0/images/nr1.jpg", IMREAD_COLOR);
+
+    Mat gray = to_grayscale(img);
     imshow("gray", gray);
 
     Mat blurred = box_blur(gray, 5);
@@ -167,12 +198,19 @@ int main() {
     imshow("binary", binary);
 
     BoundingBox bestBox = detect_plate(binary);
-    Mat source = img.clone();
+    BoundingBox manualBox = {445, 450, 805, 540}; // nr1.jpg
+//    BoundingBox manualBox = {75, 300, 775, 445}; // ch.jpg
+//    BoundingBox manualBox = {250, 255, 480, 308}; // nr2.jpg
 
+    Mat result = img.clone();
+    rectangle(result, Point(manualBox.xMin, manualBox.yMin), Point(manualBox.xMax, manualBox.yMax), Scalar(0, 255, 0),
+              3);
     if (area(bestBox.xMin, bestBox.xMax, bestBox.yMin, bestBox.yMax)) {
-        rectangle(source, Point(bestBox.xMin, bestBox.yMin), Point(bestBox.xMax, bestBox.yMax), Scalar(0, 0, 255), 3);
+        rectangle(result, Point(bestBox.xMin, bestBox.yMin), Point(bestBox.xMax, bestBox.yMax), Scalar(0, 0, 255), 3);
     }
-    imshow("plate", source);
+    float iou = computeIoU(manualBox, bestBox);
+    cout << "Result: " << iou << '\n';
+    imshow("plate", result);
     waitKey();
     return 0;
 }
